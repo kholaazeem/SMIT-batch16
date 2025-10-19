@@ -118,17 +118,24 @@ location.href = 'home.html'
 
 loginForm && loginForm.addEventListener('submit',login)
 
-
+//logout functionality___________________________________
 let logoutBtn = document.getElementById('logout')
 
 
 async function logout (){
+  try{
+
+ 
 const { error } = await supabase.auth.signOut()
 
 if (!error) {
    alert('logout successfully')
    location.href = 'index.html'
 }
+ }catch(er){
+  console.log(er);
+  
+ }
 }
 
 logoutBtn && logoutBtn.addEventListener('click',logout)
