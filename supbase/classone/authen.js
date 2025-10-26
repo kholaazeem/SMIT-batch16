@@ -36,13 +36,16 @@ async function signup(e){
       }
     }
 })
+
+
 if(error){
     console.log(error);
     return
 
     
 }else{
-  location.href = 'home.html'
+  
+  // location.href = 'home.html'
 }
 
  }catch(err){

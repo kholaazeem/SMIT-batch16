@@ -53,9 +53,22 @@ async function _addTodo() {
       if (error) {
         console.log("error in updating data--> ", error);
       } else {
-        console.log("edited");
+         Swal.fire({
+        title: "added",
+        text: " data added successfully",
+        icon: "success",
+      });
+      title.value = ''
+      description.value=''
+        for (let p of priority) {
+    if (p.checked) {
+       p.checked = false
+    }
+   AllTodos()
+       addTodo.innerHTML = "add todo";
+
       }
-    } catch (err) {
+    } }catch (err) {
       console.log(err);
       
     }
@@ -69,11 +82,22 @@ async function _addTodo() {
     if (error) {
       alert("error in creating", error);
     } else {
+   
       Swal.fire({
         title: "added",
         text: " data added successfully",
         icon: "success",
       });
+      title.value = ''
+      description.value=''
+        for (let p of priority) {
+    if (p.checked) {
+       p.checked = false
+    }
+   AllTodos()
+   
+
+  }
     }
   } catch (err) {
     alert("erorr in adding data-->", err);
@@ -135,3 +159,26 @@ window.editTodo = function (id, desc, ti, pri) {
   editId = id;
   addTodo.innerHTML = "edit todo";
 };
+
+
+window.dltTodo =async function (id){
+  try{
+const {error}= await supabase
+  .from('Todos')
+  .delete()
+  .eq('id', id)
+if(error == null){
+  Swal.fire({
+        title: "deleted",
+        text: " data deleted successfully",
+        icon: "success",
+      });
+  AllTodos()
+}
+ 
+  }catch(err){
+console.log(err);
+
+  }
+  
+}
