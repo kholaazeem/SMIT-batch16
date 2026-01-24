@@ -25,11 +25,11 @@ const DataFetch = () => {
 
 
 
-// useEffect(()=>{
-//   apiCall()
-//   console.log('api call....');
+useEffect(()=>{
+ apiCall()
+  console.log('api call....');
   
-// },[])
+},[])
 // useEffect(()=>{
 // apiCall()
 // },[products])

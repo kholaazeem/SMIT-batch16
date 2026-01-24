@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>  
-      <div>hello studnets</div>
+      <div><Ha/div>
       <div></div>
     </>
   )
