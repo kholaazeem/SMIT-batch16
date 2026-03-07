@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from 'react'
 import Navbar from '../COMPONENT/Navbar'
 import { useDispatch,useSelector } from 'react-redux'
+import { addToCart } from '../config/CartSlice'
+import CartPage from './CartPage'
 
 const MyHome = () => {
  const dipatch = useDispatch()
-  const cart = useSelector((state)=>console.log(state))
+  const cart = useSelector((state)=>console.log('state--->',state))
 
 
     const products = [
@@ -21,17 +23,16 @@ const MyHome = () => {
   
 ]
 const handleClick =(id,name)=>{
-  dipatch({
-    id,name
-  })
+  dipatch(addToCart({id,name}))
 }
- 
+
+
   return (
     <div>
         <Navbar/>
  <div className="grid grid-cols-3 mx-auto max-w-7xl gap-2">
 {products.map((e)=>(
-        <div class="max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-200">
+        <div key={e.id} class="max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-200">
   <img class="w-full h-48 object-cover" src={e.imageUrl} alt="Card Image"/>
   <div class="p-5">
     <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-2">{e.name}</h5>
@@ -45,12 +46,13 @@ const handleClick =(id,name)=>{
       add to cart
     </button>
   </div>
+
 </div>
 )
 )}
 
  </div>
-
+  <CartPage/>
     </div>
   )
 }

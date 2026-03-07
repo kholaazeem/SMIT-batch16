@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Menu, X,ShoppingCart  } from 'lucide-react'; // You might need to install lucide-react or @heroicons/react
+import Sidebar from './Sidebar';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,9 +13,19 @@ const Navbar = () => {
     { name: 'Services', href: '/services' },
     
   ];
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+    const toggleSidebar = () => {
+      
+      
+     setIsSidebarOpen(!isSidebarOpen)
+   
+    };
+   
 
   return (
     <nav className="bg-gray-800 shadow-lg">
+     
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
@@ -35,7 +46,7 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <button><ShoppingCart color='white'/></button>
+            <button onClick={toggleSidebar}><ShoppingCart color='white'/></button>
           </div>
 
           {/* Mobile Menu Button (hidden on medium screens and up) */}
