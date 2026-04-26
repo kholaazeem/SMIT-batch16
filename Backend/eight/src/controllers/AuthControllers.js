@@ -1,5 +1,5 @@
 import Users from "../models/UsersSchema.js";
-
+import jwt from 'jsonwebtoken'
 
 const addUser = async (req, res) => {
   console.log("req.body -->", req.body);
@@ -80,16 +80,26 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     console.log("req.body---", req.body);
 
-    const user = await Users.findByIdAndUpdate(id, req.body, { new: true });
+    const token = req.headers.authorization.split(' ')[1]
+  
+  const decoded = jwt.verify(token,process.env.JWT_SECRET)
+    console.log('decoded=----> ',decoded);
+    if(decoded.id == id){
+       const updatedUser = await users.findByIdAndUpdate(id, req.body, { returnDocument: 'after' });
+    }
 
-    // console.log('data after updating-----> ',user);
+   
+    
+    
 
-    res.json({
-      status: true,
-      message: "user updated successfully",
-      updatedData: user,
-    });
-    console.log(user);
+     
+    
+  
+
+ 
+
+  
+    console.log('data after updating-----> ',user);
   } catch (error) {
     console.log("error in updating user-->", error.message);
 
@@ -126,8 +136,6 @@ const deleteUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-
-
     const { email, password } = req.body;
     if(!email || !password){
        return    res.json({
@@ -135,12 +143,7 @@ const loginUser = async (req, res) => {
         message: "all fields are required",
       }); 
     }
-
-   
     const user = await Users.findOne({ email: email }); 
-    console.log('data of login user---> ', user);
-    
-   
 if(user == null ){
   return    res.json({
         status: true,
@@ -153,14 +156,23 @@ if(user == null ){
         message: "invalid credentials",
       });
     }
-      
+    console.log('JWT SECRET-->',process.env.JWT_SECRET);
+    
+    const token = jwt.sign({id:user._id , email:user.email},process.env.JWT_SECRET,function (err,token){
+  
 
-
-      res.json({
+       res.json({
         status: true,
         message: "user login successfully",
+        user:user,
+        token:token
       });
-    console.log("logindata---->", user);
+   
+    })
+
+
+     
+    // console.log("logindata---->", user);
   } catch (error) {
     console.log("error in login user-->", error.message);
 
